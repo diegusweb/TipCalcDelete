@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.e(getLocalClassName(), "Click en demoooooo");
+
         //inputBill = (EditText) findViewById(R.id.inputBill);
         ButterKnife.bind(this);
     }
@@ -54,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.btnSubmit)
-    public void handleClickSubmit(){
+
+    @OnClick(R.id.btnSubmit) void handleClickSubmit() {
+        Log.e(getLocalClassName(), "Click en submit");
         hideKeyboard();
     }
 
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                     InputMethodManager.HIDE_NOT_ALWAYS);
         } catch (NullPointerException exp){
-            Log.e("", Log.getStackTraceString(exp));
+            Log.e(getLocalClassName(), Log.getStackTraceString(exp));
         }
     }
 
