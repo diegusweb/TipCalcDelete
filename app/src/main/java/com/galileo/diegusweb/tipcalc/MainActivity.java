@@ -1,18 +1,43 @@
 package com.galileo.diegusweb.tipcalc;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.btnClear) Button btnClear;
+    @BindView(R.id.btnSubmit) Button btnSubmit;
+    @BindView(R.id.btnIncrease) Button btnIncrease;
+    @BindView(R.id.btnDecrease) EditText btnDecrease;
+    @BindView(R.id.inputPercentage) EditText inputPercentage;
+    @BindView(R.id.inputBill) EditText inputBill;
+    @BindView(R.id.txtRip) TextView txtRip;
+
+    private final static int TIP_STEP_CHANGE = 1;
+
+    private final static int DEFAULT_TIP_PERCENTAGE =10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //inputBill = (EditText) findViewById(R.id.inputBill);
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -27,6 +52,22 @@ public class MainActivity extends AppCompatActivity {
             about();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.btnSubmit)
+    public void handleClickSubmit(){
+        hideKeyboard();
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        try {
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        } catch (NullPointerException exp){
+            Log.e("", Log.getStackTraceString(exp));
+        }
     }
 
     private void about(){
